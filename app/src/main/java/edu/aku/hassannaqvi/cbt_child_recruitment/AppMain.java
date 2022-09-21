@@ -28,7 +28,6 @@ public class AppMain extends Application {
     public static final String _IP = "43.245.131.159"; // Test PHP server
     public static final Integer _PORT = 8080; // Port - with colon (:)
     public static final String PROJECT_URI = "http://" + AppMain._IP + ":" + AppMain._PORT + "/cbt/api";
-
     /*
         public static final String _IP = "43.245.131.159"; // Test server
     */
