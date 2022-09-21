@@ -1,4 +1,4 @@
-package edu.aku.hassannaqvi.cbt_child_recruitment.syncclasses;
+package edu.aku.hassannaqvi.cbt_child_recruitment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -19,13 +19,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collection;
 
-import edu.aku.hassannaqvi.cbt_child_recruitment.AppMain;
-import edu.aku.hassannaqvi.cbt_child_recruitment.DatabaseHelper;
 import edu.aku.hassannaqvi.cbt_child_recruitment.contracts.FormsContract;
 
-/**
- * Created by hassan.naqvi on 7/26/2016.
- */
 public class SyncForms extends AsyncTask<Void, Void, String> {
 
     private static final String TAG = "SyncForms";
@@ -59,8 +54,7 @@ public class SyncForms extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... params) {
         try {
-            //String url = AppMain.PROJECT_URI + FormsContract.FormsTable.URI;
-            String url = AppMain.PROJECT_URI;
+            String url = AppMain.PROJECT_URI + FormsContract.FormsTable.URI;
             Log.d(TAG, "doInBackground: URL " + url);
             return downloadUrl(url);
         } catch (IOException e) {
