@@ -3,15 +3,18 @@ package edu.aku.hassannaqvi.cbt_child_recruitment.syncclasses;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.apache.commons.io.*;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -20,6 +23,7 @@ import java.net.URL;
 import java.util.Collection;
 
 import edu.aku.hassannaqvi.cbt_child_recruitment.AppMain;
+import edu.aku.hassannaqvi.cbt_child_recruitment.CDL;
 import edu.aku.hassannaqvi.cbt_child_recruitment.DatabaseHelper;
 import edu.aku.hassannaqvi.cbt_child_recruitment.contracts.FormsContract;
 
@@ -52,7 +56,6 @@ public class SyncForms extends AsyncTask<Void, Void, String> {
         pd = new ProgressDialog(mContext);
         pd.setTitle("Please wait... Processing Forms");
         pd.show();
-
     }
 
 
@@ -73,68 +76,82 @@ public class SyncForms extends AsyncTask<Void, Void, String> {
         // Only display the first 500 characters of the retrieved
         // web page content.
         //int len = 500;
-        DatabaseHelper db = new DatabaseHelper(mContext);
-        Collection<FormsContract> forms = db.getUnsyncedForms();
-        Log.d(TAG, String.valueOf(forms.size()));
-        if (forms.size() > 0) {
-            try {
-                URL url = new URL(myurl);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(20000 /* milliseconds */);
-                conn.setConnectTimeout(30000 /* milliseconds */);
-                conn.setRequestMethod("POST");
-                conn.setDoOutput(true);
-                conn.setDoInput(true);
-                conn.setRequestProperty("Content-Type", "application/json");
-                conn.setRequestProperty("charset", "utf-8");
-                conn.setUseCaches(false);
-                // Starts the query
-                conn.connect();
-                JSONArray jsonSync = new JSONArray();
-                try {
-                    DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
 
-                    for (FormsContract fc : forms) {
+        //DatabaseHelper db = new DatabaseHelper(mContext);
+        //Collection<FormsContract> forms = db.getUnsyncedForms();
+        //Log.d(TAG, String.valueOf(forms.size()));
 
-                        jsonSync.put(fc.toJSONObject());
-                        Log.d(TAG, "downloadUrl: " + fc.toJSONObject());
-                    }
-                    wr.writeBytes(jsonSync.toString().replace("\uFEFF", "") + "\n");
-                    //longInfo(jsonSync.toString().replace("\uFEFF", "") + "\n");
-                    wr.flush();
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+        //if (forms.size() > 0) {
 
-                /*===================================================================*/
-                int HttpResult = conn.getResponseCode();
-                if (HttpResult == HttpURLConnection.HTTP_OK) {
-                    BufferedReader br = new BufferedReader(new InputStreamReader(
-                            conn.getInputStream(), "utf-8"));
-                    StringBuffer sb = new StringBuffer();
+        try {
+            URL url = new URL(myurl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(20000 /* milliseconds */);
+            conn.setConnectTimeout(30000 /* milliseconds */);
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("charset", "utf-8");
+            conn.setUseCaches(false);
+            // Starts the query
+            conn.connect();
+            JSONArray jsonSync = new JSONArray();
 
-                    while ((line = br.readLine()) != null) {
-                        sb.append(line + "\n");
-                    }
-                    br.close();
+            //try {
 
-                    System.out.println("" + sb.toString());
-                    return sb.toString();
-                } else {
-                    System.out.println(conn.getResponseMessage());
-                    return conn.getResponseMessage();
-                }
-            } catch (MalformedURLException e) {
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
 
+                /*for (FormsContract fc : forms) {
+                    jsonSync.put(fc.toJSONObject());
+                    Log.d(TAG, "downloadUrl: " + fc.toJSONObject());
+                }*/
+
+            wr.writeBytes(jsonSync.toString().replace("\uFEFF", "") + "\n");
+            //longInfo(jsonSync.toString().replace("\uFEFF", "") + "\n");
+            wr.flush();
+
+            /*} catch (JSONException e) {
+                // TODO Auto-generated catch block
                 e.printStackTrace();
-            } catch (IOException e) {
+            }*/
 
-                e.printStackTrace();
+            /*===================================================================*/
+
+
+            File folder = new File(Environment.getExternalStorageDirectory() + "/Download/com/forms/GSED LF-media");
+            if (!folder.exists()) {
+                Toast.makeText(mContext.getApplicationContext(), "ODK not found in this device install ODK first", Toast.LENGTH_SHORT).show();
+                return "";
             }
-        } else {
-            return "No new records to sync";
+
+
+            int HttpResult = conn.getResponseCode();
+            if (HttpResult == HttpURLConnection.HTTP_OK) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(
+                        conn.getInputStream(), "utf-8"));
+                StringBuffer sb = new StringBuffer();
+
+                while ((line = br.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                br.close();
+
+                System.out.println("" + sb.toString());
+                return sb.toString();
+            } else {
+                System.out.println(conn.getResponseMessage());
+                return conn.getResponseMessage();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        /*} else {
+            return "No new records to sync";
+        }*/
+
         return line;
         /*===================================================================*/
 
@@ -147,30 +164,39 @@ public class SyncForms extends AsyncTask<Void, Void, String> {
         String sError = "";
         try {
             JSONArray json = new JSONArray(result);
-            DatabaseHelper db = new DatabaseHelper(mContext);
-            for (int i = 0; i < json.length(); i++) {
+
+            File file = new File(Environment.getExternalStorageDirectory() +
+                    "/Download/com/forms/GSED LF-media/mine_enroll_info_csv.csv.imported");
+
+            String csvString = CDL.toString(json);
+            FileUtils.writeStringToFile(file, csvString);
+
+
+            //DatabaseHelper db = new DatabaseHelper(mContext);
+
+            /*for (int i = 0; i < json.length(); i++) {
                 JSONObject jsonObject = new JSONObject(json.getString(i));
                 if (jsonObject.getString("status").equals("1")) {
-                    db.updateForms(jsonObject.getString("id"));
                     sSynced++;
                 } else if (jsonObject.getString("error").equals("1")) {
                     sError += "[" + jsonObject.getString("id") + "] " + jsonObject.getString("message") + "\n";
                 }
-            }
-            Toast.makeText(mContext, sSynced + " Forms synced." + String.valueOf(json.length() - sSynced) + " Errors.", Toast.LENGTH_SHORT).show();
+            }*/
 
-            pd.setMessage(sSynced + " Forms synced." + String.valueOf(json.length() - sSynced) + " Errors.\n" + sError);
-            pd.setTitle("Done uploading Forms data");
-            pd.show();
-        } catch (JSONException e) {
+            //Toast.makeText(mContext, sSynced + " Forms synced." + String.valueOf(json.length() - sSynced) + " Errors.", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(mContext, "CSV file downloaded", Toast.LENGTH_LONG).show();
+
+            //pd.setMessage("CSV Downloaded");
+            //pd.setTitle("CSV Downloaded");
+            //pd.show();
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
-            Toast.makeText(mContext, "Failed Sync " + result, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Error CSV downloading " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
-            pd.setMessage(result);
-            pd.setTitle("Forms Sync Failed");
-            pd.show();
-
-
+            //pd.setMessage("Error CSV downloading");
+            //pd.setTitle("Error CSV downloading");
+            //pd.show();
         }
     }
 }
