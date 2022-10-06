@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GSEDCSV.iml" filepath="$PROJECT_DIR$/.idea/modules/GSEDCSV.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/GSEDCSV.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/GSEDCSV.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GSEDCSV2022.iml" filepath="$PROJECT_DIR$/.idea/modules/GSEDCSV2022.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/GSEDCSV2022.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/GSEDCSV2022.app.iml" />
     </modules>
   </component>
 </project>

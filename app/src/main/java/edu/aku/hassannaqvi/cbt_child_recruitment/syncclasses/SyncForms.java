@@ -163,16 +163,23 @@ public class SyncForms extends AsyncTask<Void, Void, String> {
         int sSynced = 0;
         String sError = "";
         try {
-            JSONArray json = new JSONArray(result);
 
-            File file = new File(Environment.getExternalStorageDirectory() +
-                    "/Download/com/forms/GSED LF-media/mine_enroll_info_csv.csv.imported");
+            if (result.equals("No Response")) {
+                Toast.makeText(mContext.getApplicationContext(), "No response from the server", Toast.LENGTH_SHORT).show();
+                pd.cancel();
+            } else {
 
-            String csvString = CDL.toString(json);
-            FileUtils.writeStringToFile(file, csvString);
+                JSONArray json = new JSONArray(result);
 
 
-            //DatabaseHelper db = new DatabaseHelper(mContext);
+                File file = new File(Environment.getExternalStorageDirectory() +
+                        "/Download/com/forms/GSED LF-media/mine_enroll_info_csv.csv.imported");
+
+                String csvString = CDL.toString(json);
+                FileUtils.writeStringToFile(file, csvString);
+
+
+                //DatabaseHelper db = new DatabaseHelper(mContext);
 
             /*for (int i = 0; i < json.length(); i++) {
                 JSONObject jsonObject = new JSONObject(json.getString(i));
@@ -183,13 +190,15 @@ public class SyncForms extends AsyncTask<Void, Void, String> {
                 }
             }*/
 
-            //Toast.makeText(mContext, sSynced + " Forms synced." + String.valueOf(json.length() - sSynced) + " Errors.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, sSynced + " Forms synced." + String.valueOf(json.length() - sSynced) + " Errors.", Toast.LENGTH_SHORT).show();
 
-            Toast.makeText(mContext, "CSV file downloaded", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "CSV file downloaded", Toast.LENGTH_LONG).show();
 
-            //pd.setMessage("CSV Downloaded");
-            //pd.setTitle("CSV Downloaded");
-            //pd.show();
+                //pd.setMessage("CSV Downloaded");
+                //pd.setTitle("CSV Downloaded");
+                //pd.show();
+            }
+
         } catch (JSONException | IOException e) {
             e.printStackTrace();
             Toast.makeText(mContext, "Error CSV downloading " + e.getMessage(), Toast.LENGTH_SHORT).show();
