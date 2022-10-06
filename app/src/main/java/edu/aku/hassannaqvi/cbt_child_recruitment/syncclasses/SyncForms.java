@@ -193,6 +193,7 @@ public class SyncForms extends AsyncTask<Void, Void, String> {
                 //Toast.makeText(mContext, sSynced + " Forms synced." + String.valueOf(json.length() - sSynced) + " Errors.", Toast.LENGTH_SHORT).show();
 
                 Toast.makeText(mContext, "CSV file downloaded", Toast.LENGTH_LONG).show();
+                pd.cancel();
 
                 //pd.setMessage("CSV Downloaded");
                 //pd.setTitle("CSV Downloaded");
@@ -202,6 +203,7 @@ public class SyncForms extends AsyncTask<Void, Void, String> {
         } catch (JSONException | IOException e) {
             e.printStackTrace();
             Toast.makeText(mContext, "Error CSV downloading " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            pd.cancel();
 
             //pd.setMessage("Error CSV downloading");
             //pd.setTitle("Error CSV downloading");
