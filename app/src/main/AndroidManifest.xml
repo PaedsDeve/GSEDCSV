@@ -11,14 +11,14 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
-        android:name=".AppMain"
+        android:name="edu.aku.hassannaqvi.GSEDCSV.AppMain"
         android:allowBackup="true"
         android:icon="@drawable/ic_cloud_download_black_24dp"
         android:roundIcon="@drawable/ic_cloud_download_black_24dp"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".GSEDCSV"
+            android:name="edu.aku.hassannaqvi.GSEDCSV.GSEDCSV"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
@@ -29,56 +29,56 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AndroidDatabaseManager"
+            android:name="edu.aku.hassannaqvi.GSEDCSV.AndroidDatabaseManager"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.LoginActivity"
+            android:name="edu.aku.hassannaqvi.GSEDCSV.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name="edu.aku.hassannaqvi.GSEDCSV.activities.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.SectionAActivity"
+            android:name="edu.aku.hassannaqvi.GSEDCSV.activities.SectionAActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.SectionBActivity"
+            android:name="edu.aku.hassannaqvi.GSEDCSV.activities.SectionBActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme1"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.SectionFActivity"
+            android:name="edu.aku.hassannaqvi.GSEDCSV.activities.SectionFActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.SectionGActivity"
+            android:name="edu.aku.hassannaqvi.GSEDCSV.activities.SectionGActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.SectionHActivity"
+            android:name="edu.aku.hassannaqvi.GSEDCSV.activities.SectionHActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.SectionKActivity"
+            android:name="edu.aku.hassannaqvi.GSEDCSV.activities.SectionKActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.SectionLActivity"
+            android:name="edu.aku.hassannaqvi.GSEDCSV.activities.SectionLActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.SectionMActivity"
+            android:name="edu.aku.hassannaqvi.GSEDCSV.activities.SectionMActivity"
             android:theme="@style/AppTheme1"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.EndingActivity"
+            android:name="edu.aku.hassannaqvi.GSEDCSV.activities.EndingActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".FormsList"
+            android:name="edu.aku.hassannaqvi.GSEDCSV.FormsList"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
     </application>
