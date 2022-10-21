@@ -82,8 +82,8 @@ public class SyncForms extends AsyncTask<Void, Void, String> {
         try {
             URL url = new URL(myurl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(20000 /* milliseconds */);
-            conn.setConnectTimeout(30000 /* milliseconds */);
+            conn.setReadTimeout(100000 /* milliseconds */);
+            conn.setConnectTimeout(150000 /* milliseconds */);
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
             conn.setDoInput(true);
@@ -117,28 +117,30 @@ public class SyncForms extends AsyncTask<Void, Void, String> {
 
             File folder = new File(Environment.getExternalStorageDirectory() + "/Download/com/forms/GSED LF-media");
             if (!folder.exists()) {
-                Toast.makeText(mContext.getApplicationContext(), "ODK not found in this device install ODK first", Toast.LENGTH_SHORT).show();
-                return "";
-            }
-
-
-            int HttpResult = conn.getResponseCode();
-            if (HttpResult == HttpURLConnection.HTTP_OK) {
-                BufferedReader br = new BufferedReader(new InputStreamReader(
-                        conn.getInputStream(), "utf-8"));
-                StringBuffer sb = new StringBuffer();
-
-                while ((line = br.readLine()) != null) {
-                    sb.append(line + "\n");
-                }
-                br.close();
-
-                System.out.println("" + sb.toString());
-                return sb.toString();
+                //Toast.makeText(mContext.getApplicationContext(), "ODK not found in this device install ODK first", Toast.LENGTH_SHORT).show();
+                return "ODK not found in this device install ODK first";
             } else {
-                System.out.println(conn.getResponseMessage());
-                return conn.getResponseMessage();
+
+                int HttpResult = conn.getResponseCode();
+                if (HttpResult == HttpURLConnection.HTTP_OK) {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(
+                            conn.getInputStream(), "utf-8"));
+                    StringBuffer sb = new StringBuffer();
+
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+
+                    System.out.println("" + sb.toString());
+                    return sb.toString();
+                } else {
+                    System.out.println(conn.getResponseMessage());
+                    return conn.getResponseMessage();
+                }
+
             }
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -160,8 +162,11 @@ public class SyncForms extends AsyncTask<Void, Void, String> {
         String sError = "";
         try {
 
-            if (result.equals("No Response")) {
-                Toast.makeText(mContext.getApplicationContext(), "No response from the server", Toast.LENGTH_SHORT).show();
+            if (result.equals("")) {
+                Toast.makeText(mContext, "No response from the server", Toast.LENGTH_SHORT).show();
+                pd.cancel();
+            } else if (result.equals("ODK not found in this device install ODK first")) {
+                Toast.makeText(mContext, "ODK not found in this device install ODK first", Toast.LENGTH_SHORT).show();
                 pd.cancel();
             } else {
 
