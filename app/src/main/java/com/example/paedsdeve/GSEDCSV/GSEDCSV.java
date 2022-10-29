@@ -19,13 +19,14 @@ public class GSEDCSV extends Activity {
         setContentView(R.layout.activity_gsedcsv);
     }
 
+
     public void DownloadDataCSV(View view) {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnected()) {
-            Toast.makeText(getApplicationContext(), "Syncing Forms", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Fetching data ...", Toast.LENGTH_SHORT).show();
             new SyncForms(this).execute();
         } else {
             Toast.makeText(this, "No network connection available.", Toast.LENGTH_SHORT).show();

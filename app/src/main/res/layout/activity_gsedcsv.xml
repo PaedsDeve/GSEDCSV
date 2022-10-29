@@ -16,6 +16,7 @@
 
         <TextView
             android:id="@+id/lblMainMenu"
+            style="@style/lblTextViewHeading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -27,6 +28,7 @@
 
         <Button
             android:id="@+id/btnCreateCSV"
+            style="@style/btnCSVDownloader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -37,6 +39,7 @@
 
         <Button
             android:id="@+id/btnDownloadCSV"
+            style="@style/btnCSVDownloader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -46,6 +49,7 @@
 
         <Button
             android:id="@+id/btnViewSubjectInfo"
+            style="@style/btnCSVDownloader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

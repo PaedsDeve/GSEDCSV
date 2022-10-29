@@ -10,6 +10,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.apache.commons.io.*;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -19,6 +20,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.example.paedsdeve.GSEDCSV.AppMain;
 import com.example.paedsdeve.GSEDCSV.CDL;
@@ -92,30 +95,19 @@ public class SyncForms extends AsyncTask<Void, Void, String> {
             conn.setUseCaches(false);
             // Starts the query
             conn.connect();
-            JSONArray jsonSync = new JSONArray();
 
-            //try {
+            //JSONArray jsonSync = new JSONArray();
+            //DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            //wr.writeBytes(jsonSync.toString().replace("\uFEFF", "") + "\n");
+            //wr.flush();
 
-            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
 
-                /*for (FormsContract fc : forms) {
-                    jsonSync.put(fc.toJSONObject());
-                    Log.d(TAG, "downloadUrl: " + fc.toJSONObject());
-                }*/
-
-            wr.writeBytes(jsonSync.toString().replace("\uFEFF", "") + "\n");
-            //longInfo(jsonSync.toString().replace("\uFEFF", "") + "\n");
-            wr.flush();
-
-            /*} catch (JSONException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }*/
 
             /*===================================================================*/
 
 
-            File folder = new File(Environment.getExternalStorageDirectory() + "/Download/com/forms/GSED LF-media");
+            File folder = new File(Environment.getExternalStorageDirectory() + "/com/forms/GSED LF-media");
+
             if (!folder.exists()) {
                 //Toast.makeText(mContext.getApplicationContext(), "ODK not found in this device install ODK first", Toast.LENGTH_SHORT).show();
                 return "ODK not found in this device install ODK first";
@@ -172,12 +164,22 @@ public class SyncForms extends AsyncTask<Void, Void, String> {
 
                 JSONArray json = new JSONArray(result);
 
+                File file_lf = new File(Environment.getExternalStorageDirectory() +
+                        "/com/forms/GSED LF-media/mine_enroll_info_csv.csv");
 
-                File file = new File(Environment.getExternalStorageDirectory() +
-                        "/Download/com/forms/GSED LF-media/mine_enroll_info_csv.csv.imported");
+
+                File file_sf = new File(Environment.getExternalStorageDirectory() +
+                        "/com/forms/GSED SF-media/mine_enroll_info_csv.csv");
+
+
+                File file_psy = new File(Environment.getExternalStorageDirectory() +
+                        "/com/forms/GSED PSY-media/mine_enroll_info_csv.csv");
+
 
                 String csvString = CDL.toString(json);
-                FileUtils.writeStringToFile(file, csvString);
+                FileUtils.writeStringToFile(file_lf, csvString);
+                FileUtils.writeStringToFile(file_sf, csvString);
+                FileUtils.writeStringToFile(file_psy, csvString);
 
 
                 //DatabaseHelper db = new DatabaseHelper(mContext);

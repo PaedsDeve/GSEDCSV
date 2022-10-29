@@ -139,6 +139,8 @@ public class CDL {
                 } else {
                     sb.append(string);
                 }
+
+
             }
         }
         sb.append('\n');
@@ -225,19 +227,8 @@ public class CDL {
         JSONObject jo = ja.optJSONObject(0);
         if (jo != null) {
             JSONArray names = jo.names();
-
-            if (names.equals("enroll_ch_study_id") ||
-                    names.equals("enroll_q1") ||
-                    names.equals("enroll_q2") ||
-                    names.equals("enroll_q3") ||
-                    names.equals("enroll_q4") ||
-                    names.equals("enroll_q5") ||
-                    names.equals("enroll_q6")
-            ) {
-
-                if (names != null) {
-                    return rowToString(names) + toString(names, ja);
-                }
+            if (names != null) {
+                return rowToString(names) + toString(names, ja);
             }
         }
         return null;
