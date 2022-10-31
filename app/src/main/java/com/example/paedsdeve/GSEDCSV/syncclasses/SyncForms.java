@@ -106,7 +106,7 @@ public class SyncForms extends AsyncTask<Void, Void, String> {
             /*===================================================================*/
 
 
-            File folder = new File(Environment.getExternalStorageDirectory() + "/com/forms/GSED LF-media");
+            File folder = new File(Environment.getExternalStorageDirectory() + "/com/forms/GSED LF (MINE)-media");
 
             if (!folder.exists()) {
                 //Toast.makeText(mContext.getApplicationContext(), "ODK not found in this device install ODK first", Toast.LENGTH_SHORT).show();
@@ -165,15 +165,15 @@ public class SyncForms extends AsyncTask<Void, Void, String> {
                 JSONArray json = new JSONArray(result);
 
                 File file_lf = new File(Environment.getExternalStorageDirectory() +
-                        "/com/forms/GSED LF-media/mine_enroll_info_csv.csv");
+                        "/com/forms/GSED LF (MINE)-media/mine_enroll_info_csv.csv");
 
 
                 File file_sf = new File(Environment.getExternalStorageDirectory() +
-                        "/com/forms/GSED SF-media/mine_enroll_info_csv.csv");
+                        "/com/forms/GSED SF (MINE)-media/mine_enroll_info_csv.csv");
 
 
                 File file_psy = new File(Environment.getExternalStorageDirectory() +
-                        "/com/forms/GSED PSY-media/mine_enroll_info_csv.csv");
+                        "/com/forms/GSED PSY (MINE)-media/mine_enroll_info_csv.csv");
 
 
                 String csvString = CDL.toString(json);

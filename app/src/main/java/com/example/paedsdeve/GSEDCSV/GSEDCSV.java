@@ -19,7 +19,6 @@ public class GSEDCSV extends Activity {
         setContentView(R.layout.activity_gsedcsv);
     }
 
-
     public void DownloadDataCSV(View view) {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
